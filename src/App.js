@@ -27,8 +27,6 @@ class App extends React.Component {
       title: this.state.title
     }
 
-    console.log(newText);
-
     const updatedText = [...this.state.texts, newText];
 
     this.setState({
@@ -36,6 +34,12 @@ class App extends React.Component {
       id: uuid(),
       title: "",
       editItem: false
+    })
+  }
+
+  clearList = () => {
+    this.setState({
+      texts: []
     })
   }
 
@@ -50,7 +54,10 @@ class App extends React.Component {
               handleChange={this.handleChange}
               handleSubmit={this.handleSubmit}
             />
-            <TodoList texts={this.state.texts} />
+            <TodoList 
+              texts={this.state.texts} 
+              clearList={this.clearList} 
+            />
           </div>
         </div>
       </div>
