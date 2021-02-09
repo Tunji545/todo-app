@@ -31,8 +31,8 @@ class App extends React.Component {
 
     this.setState({
       texts: updatedText,
-      id: uuid(),
       title: "",
+      id: uuid(),
       editItem: false
     })
   }
@@ -40,6 +40,28 @@ class App extends React.Component {
   clearList = () => {
     this.setState({
       texts: []
+    })
+  }
+
+  handleDelete = id => {
+    const filteredItem = this.state.texts.filter(text => text.id !== id)
+
+    this.setState({
+      texts: filteredItem
+    })
+  }
+
+  handleEdit = id => {
+    const filteredItem = this.state.texts.filter(text => text.id !== id)
+
+    const selectedItem = this.state.texts.find(text => text.id === id)
+
+    console.log(selectedItem.title);
+    this.setState({
+      texts: filteredItem,
+      title: selectedItem.title,
+      id: id,
+      editItem: true
     })
   }
 
@@ -53,10 +75,13 @@ class App extends React.Component {
               title={this.state.title} 
               handleChange={this.handleChange}
               handleSubmit={this.handleSubmit}
+              editItem={this.state.editItem}
             />
             <TodoList 
               texts={this.state.texts} 
               clearList={this.clearList} 
+              handleDelete={this.handleDelete}
+              handleEdit={this.handleEdit}
             />
           </div>
         </div>
